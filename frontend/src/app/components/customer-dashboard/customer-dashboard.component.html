@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>Welcome, {{ auth.currentUser()?.name }}</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Browse Services</h3>
+      <p>Find a service and book an appointment with a provider.</p>
+      <a routerLink="/services" class="btn btn-primary">Browse Services</a>
+    </div>
+    <div class="card">
+      <h3>My Appointments</h3>
+      <p>View your upcoming and past appointments.</p>
+      <a routerLink="/customer/appointments" class="btn btn-primary">View Appointments</a>
+    </div>
+  </div>
+</div>

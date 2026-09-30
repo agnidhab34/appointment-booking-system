@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Welcome, {{ auth.currentUser()?.name }}</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Manage Services</h3>
+      <p>Create, edit, or remove the services you offer.</p>
+      <a routerLink="/provider/services" class="btn btn-primary">Manage Services</a>
+    </div>
+    <div class="card">
+      <h3>Manage Availability</h3>
+      <p>Define the time slots customers can book.</p>
+      <a routerLink="/provider/availability" class="btn btn-primary">Manage Availability</a>
+    </div>
+    <div class="card">
+      <h3>Appointments</h3>
+      <p>View, confirm, reject, or complete booked appointments.</p>
+      <a routerLink="/provider/appointments" class="btn btn-primary">View Appointments</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<nav class="navbar">
+  <a routerLink="/" class="brand">Appointment Booking</a>
+
+  <div class="nav-links">
+    @if (!auth.isLoggedIn()) {
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    }
+
+    @if (auth.isLoggedIn() && auth.getRole() === 'customer') {
+      <a routerLink="/customer/dashboard">Dashboard</a>
+      <a routerLink="/services">Services</a>
+      <a routerLink="/customer/appointments">My Appointments</a>
+    }
+
+    @if (auth.isLoggedIn() && auth.getRole() === 'provider') {
+      <a routerLink="/provider/dashboard">Dashboard</a>
+      <a routerLink="/provider/services">Manage Services</a>
+      <a routerLink="/provider/availability">Manage Availability</a>
+      <a routerLink="/provider/appointments">Appointments</a>
+    }
+
+    @if (auth.isLoggedIn()) {
+      <span class="user-name">{{ auth.currentUser()?.name }}</span>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    }
+  </div>
+</nav>

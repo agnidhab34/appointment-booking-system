@@ -1,0 +1,67 @@
+<div class="container">
+  <h2>My Appointments</h2>
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="spinner"></div>
+  } @else {
+    <h3>Upcoming</h3>
+    @if (upcoming.length === 0) {
+      <div class="empty-state"><p>No upcoming appointments.</p></div>
+    } @else {
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Service</th><th>Provider</th><th>Date</th><th>Time</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            @for (a of upcoming; track a._id) {
+              <tr>
+                <td>{{ serviceName(a) }}</td>
+                <td>{{ providerName(a) }}</td>
+                <td>{{ a.date }}</td>
+                <td>{{ a.startTime }} - {{ a.endTime }}</td>
+                <td><span class="badge" [class]="'badge-' + a.status">{{ a.status }}</span></td>
+                <td>
+                  <button class="btn btn-danger" [disabled]="cancellingId === a._id" (click)="cancel(a)">
+                    {{ cancellingId === a._id ? 'Cancelling...' : 'Cancel' }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <h3 style="margin-top:24px;">Past</h3>
+    @if (past.length === 0) {
+      <div class="empty-state"><p>No past appointments.</p></div>
+    } @else {
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Service</th><th>Provider</th><th>Date</th><th>Time</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            @for (a of past; track a._id) {
+              <tr>
+                <td>{{ serviceName(a) }}</td>
+                <td>{{ providerName(a) }}</td>
+                <td>{{ a.date }}</td>
+                <td>{{ a.startTime }} - {{ a.endTime }}</td>
+                <td><span class="badge" [class]="'badge-' + a.status">{{ a.status }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

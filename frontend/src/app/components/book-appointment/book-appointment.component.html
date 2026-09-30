@@ -1,0 +1,39 @@
+<div class="container" style="max-width: 600px;">
+  <h2>Book Appointment</h2>
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+
+  @if (service) {
+    <div class="card">
+      <h3>{{ service.name }}</h3>
+      <p><strong>Duration:</strong> {{ service.duration }} min &nbsp;|&nbsp; <strong>Price:</strong> ${{ service.price }}</p>
+
+      <div class="form-group">
+        <label>Select a Date</label>
+        <input type="date" [(ngModel)]="selectedDate" (change)="onDateChange()">
+      </div>
+
+      @if (slotsLoading) {
+        <div class="spinner"></div>
+      } @else if (selectedDate && slots.length === 0) {
+        <div class="empty-state">
+          <p>No available slots on this date. Try another date.</p>
+        </div>
+      } @else if (slots.length > 0) {
+        <h4>Available Time Slots</h4>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          @for (slot of slots; track slot._id) {
+            <button class="btn btn-primary" [disabled]="booking" (click)="bookSlot(slot)">
+              {{ slot.startTime }} - {{ slot.endTime }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

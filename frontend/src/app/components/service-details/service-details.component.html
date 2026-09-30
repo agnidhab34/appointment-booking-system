@@ -1,0 +1,19 @@
+<div class="container" style="max-width: 600px;">
+  @if (loading) {
+    <div class="spinner"></div>
+  } @else if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  } @else if (service) {
+    <div class="card">
+      <h2>{{ service.name }}</h2>
+      <p>{{ service.description || 'No description provided.' }}</p>
+      <p><strong>Provider:</strong> {{ providerName() }}</p>
+      <p><strong>Duration:</strong> {{ service.duration }} minutes</p>
+      <p><strong>Price:</strong> ${{ service.price }}</p>
+
+      @if (auth.getRole() === 'customer') {
+        <a [routerLink]="['/customer/book', service._id]" class="btn btn-primary">Book This Service</a>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,45 @@
+<div class="container">
+  <h2>Appointments</h2>
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="spinner"></div>
+  } @else if (appointments.length === 0) {
+    <div class="empty-state"><p>No appointments booked yet.</p></div>
+  } @else {
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Customer</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (a of appointments; track a._id) {
+            <tr>
+              <td>{{ customerName(a) }}</td>
+              <td>{{ serviceName(a) }}</td>
+              <td>{{ a.date }}</td>
+              <td>{{ a.startTime }} - {{ a.endTime }}</td>
+              <td><span class="badge" [class]="'badge-' + a.status">{{ a.status }}</span></td>
+              <td>
+                @if (a.status === 'pending') {
+                  <button class="btn btn-success" [disabled]="updatingId === a._id" (click)="updateStatus(a, 'confirmed')">Confirm</button>
+                  <button class="btn btn-danger" style="margin-left:6px;" [disabled]="updatingId === a._id" (click)="updateStatus(a, 'cancelled')">Reject</button>
+                }
+                @if (a.status === 'confirmed') {
+                  <button class="btn btn-success" [disabled]="updatingId === a._id" (click)="updateStatus(a, 'completed')">Mark Completed</button>
+                  <button class="btn btn-danger" style="margin-left:6px;" [disabled]="updatingId === a._id" (click)="updateStatus(a, 'cancelled')">Cancel</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
